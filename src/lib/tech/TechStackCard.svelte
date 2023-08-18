@@ -1,0 +1,122 @@
+<script>
+    import {fly, crossfade, fade} from "svelte/transition";
+    import {onMount} from "svelte";
+    import {Icon, Star} from "svelte-hero-icons";
+
+    export let size = '';
+    export let animationConfig = {x: -200, duration: 2000};
+    const url = 'http://localhost:8000/api/tech-stack/';
+    let stack = [];
+    let switchHover = false;
+    let isGrid = false;
+
+    const badgeColors = {
+        'BACKEND': 'bg-red-500',
+        'FRONTEND': 'bg-cyan-500',
+        'MOBILE': 'bg-green-500',
+        'DEVOPS': 'bg-yellow-400',
+        'DATABASE': 'bg-fuschia-500',
+        'OTHER': 'bg-gray-400',
+    }
+
+    onMount(async () => {
+        await fetchStack();
+    })
+
+    const fetchStack = async () => {
+        stack = [];
+        isGrid = false;
+        const response = await fetch(url);
+        const data = await response.json();
+        stack = data;
+    }
+    const fetchOtherTechnologies = async () => {
+        stack = []
+        isGrid = true;
+        const response = await fetch(`${url}?inactive=`);
+        const data = await response.json();
+        stack = data;
+    }
+
+</script>
+
+<style lang="postcss">
+    .w-50 {
+        width: 50%;
+    }
+
+    button, a {
+        transition: all .3s ease;
+    }
+
+    button.hover, a.hover {
+        border-color: orange;
+        color: orange;
+    }
+</style>
+
+<div
+        class="bg-zinc-900 rounded-lg p-8 {size} flex mt-5"
+        in:fly={animationConfig}
+>
+    <div class="flex flex-col">
+        <div class="flex flex-row items-center justify-between w-full mb-2">
+            <h1 class="font-sans text-2xl font-light text-white ">Tech Stack</h1>
+            <button
+                    class="text-white border rounded-md p-2 flex flex-col align-middle justify-center {switchHover ? 'hover' : ''}"
+                    on:mouseenter={() => switchHover = true}
+                    on:mouseleave={() => switchHover = false}
+                    on:click={() => isGrid ? fetchStack() : fetchOtherTechnologies()}
+            >
+                {isGrid ? 'Current Stack' : 'Other Technologies'}
+
+            </button>
+        </div>
+        {#if isGrid}
+            <!-- Display old tech as grid since is less important -->
+            <div class="grid grid-cols-3 gap-4"
+            >
+                {#if stack.length > 0}
+                    {#each stack as technology (technology.id)}
+                        <div class="flex flex-col items-center border border-white rounded-sm p-3 my-4">
+                            <div class="p-2 flex flex-row align-middle basis-1/4 mb-2">
+                                <div class="flex justify-center items-center content-center">
+                                    <img src={technology.logo} alt={technology.title} class="h-20"/>
+                                </div>
+                            </div>
+                            <div class="flex-col flex basis-3/4 content-end">
+                                <span class="badge rounded-md text-xs px-2 py-1 w-fit mb-2 text-white {badgeColors[technology.type]}">{technology.type_display}</span>
+                                <p class="font-sans text-lg font-light text-white">{technology.title}</p>
+                                <p class="font-sans text-xs font-light text-white">{technology.description}</p>
+                            </div>
+                        </div>
+                    {/each}
+                {/if}
+            </div>
+        {:else}
+            {#if stack.length > 0}
+                {#each stack as technology (technology.id)}
+                    <div class="flex flex-row items-center my-4"
+                    >
+                        <div class="border-1 border-white p-2 flex flex-row align-middle basis-1/4">
+                            <div class="me-5 flex justify-center items-center content-center h-full">
+                                <img src={technology.logo} alt={technology.title}
+                                     class="border-white border rounded-sm"/>
+                            </div>
+                        </div>
+                        <div class="flex-col flex basis-3/4 content-center">
+                            <div class="flex flex-row items-center mb-2">
+                                <span class="badge rounded-md text-xs px-2 py-1 w-fit me-2 text-white {badgeColors[technology.type]}">{technology.type_display}</span>
+                                {#each Array(technology.experience).fill() as _, i}
+                                    <Icon src="{Star}" class="text-yellow-200 w-4"/>
+                                {/each}
+                            </div>
+                            <p class="font-sans text-lg font-light text-white">{technology.title}</p>
+                            <p class="font-sans text-xs font-light text-white">{technology.description}</p>
+                        </div>
+                    </div>
+                {/each}
+            {/if}
+        {/if}
+    </div>
+</div>

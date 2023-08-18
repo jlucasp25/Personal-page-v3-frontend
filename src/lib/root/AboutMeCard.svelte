@@ -2,6 +2,7 @@
     import {fly} from "svelte/transition";
 
     export let body;
+    export let body2;
     export let size = '';
     export let animationConfig = {x: -200, duration: 2000};
 </script>
@@ -23,13 +24,12 @@
         class="bg-zinc-900 rounded-lg p-8 {size} flex mt-5"
         in:fly={animationConfig}
 >
-    <div class="flex flex-col w-50">
+    <div class="flex flex-col ">
         <p class="font-sans font-light text-white">
             {body}
         </p>
+        <p class="font-sans font-light text-white mt-3">
+            {body2}
+        </p>
     </div>
-    <div class="flex flex-row justify-end w-50">
-        <img class="w-20 rounded-full border-2" src="/PFP.png" alt="Lucas no Universal">
-    </div>
-
 </div>
