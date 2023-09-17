@@ -18,10 +18,6 @@
         const data = await response.json();
         aggregatedProjects = data;
     }
-
-    const displayProjectDetails = (id) => {
-        console.log(id);
-    }
 </script>
 
 <style lang="postcss">

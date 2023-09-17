@@ -1,7 +1,7 @@
 <script>
-    import {fly, crossfade, fade} from "svelte/transition";
+    import {fly} from "svelte/transition";
     import {onMount} from "svelte";
-    import {Icon, Star} from "svelte-hero-icons";
+    import {ArrowLeft, ArrowRight, Icon, Star} from "svelte-hero-icons";
 
     export let size = '';
     export let animationConfig = {x: -200, duration: 2000};
@@ -9,6 +9,9 @@
     let stack = [];
     let switchHover = false;
     let isGrid = false;
+    const PAGE_SIZE = 4;
+    let currentPage = 1;
+    let totalPages = 0;
 
     const badgeColors = {
         'BACKEND': 'bg-red-500',
@@ -29,7 +32,9 @@
         const response = await fetch(url);
         const data = await response.json();
         stack = data;
+        totalPages = (stack.length / PAGE_SIZE) + 1;
     }
+
     const fetchOtherTechnologies = async () => {
         stack = []
         isGrid = true;
@@ -63,7 +68,7 @@
         <div class="flex flex-row items-center justify-between w-full mb-2">
             <h1 class="font-sans text-2xl font-light text-white ">Tech Stack</h1>
             <button
-                    class="text-white border rounded-md p-2 flex flex-col align-middle justify-center {switchHover ? 'hover' : ''}"
+                    class="text-white border rounded-md p-2 ms-2 flex flex-col align-middle justify-center {switchHover ? 'hover' : ''}"
                     on:mouseenter={() => switchHover = true}
                     on:mouseleave={() => switchHover = false}
                     on:click={() => isGrid ? fetchStack() : fetchOtherTechnologies()}
@@ -77,45 +82,57 @@
             <div class="grid grid-cols-3 gap-4"
             >
                 {#if stack.length > 0}
-                    {#each stack as technology (technology.id)}
-                        <div class="flex flex-col items-center border border-white rounded-sm p-3 my-4">
-                            <div class="p-2 flex flex-row align-middle basis-1/4 mb-2">
-                                <div class="flex justify-center items-center content-center">
-                                    <img src={technology.logo} alt={technology.title} class="h-20"/>
+                    {#each stack as technology, i}
+                        {#if (i + 1) <= (currentPage * PAGE_SIZE) && (i + 1) > ((currentPage - 1) * PAGE_SIZE)}
+                            <div class="flex flex-col items-center border border-white rounded-sm p-3 my-4">
+                                <div class="p-2 flex flex-row align-middle basis-1/4 mb-2">
+                                    <div class="flex justify-center items-center content-center">
+                                        <img src={technology.logo} alt={technology.title} class="h-20"/>
+                                    </div>
+                                </div>
+                                <div class="flex-col flex basis-3/4 content-end">
+                                    <span class="badge rounded-md text-xs px-2 py-1 w-fit mb-2 text-white {badgeColors[technology.type]}">{technology.type_display}</span>
+                                    <p class="font-sans text-lg font-light text-white">{technology.title}</p>
+                                    <p class="font-sans text-xs font-light text-white">{technology.description}</p>
                                 </div>
                             </div>
-                            <div class="flex-col flex basis-3/4 content-end">
-                                <span class="badge rounded-md text-xs px-2 py-1 w-fit mb-2 text-white {badgeColors[technology.type]}">{technology.type_display}</span>
-                                <p class="font-sans text-lg font-light text-white">{technology.title}</p>
-                                <p class="font-sans text-xs font-light text-white">{technology.description}</p>
-                            </div>
-                        </div>
+                        {/if}
                     {/each}
                 {/if}
             </div>
         {:else}
             {#if stack.length > 0}
-                {#each stack as technology (technology.id)}
-                    <div class="flex flex-row items-center my-4"
-                    >
-                        <div class="border-1 border-white p-2 flex flex-row align-middle basis-1/4">
-                            <div class="me-5 flex justify-center items-center content-center h-full">
-                                <img src={technology.logo} alt={technology.title}
-                                     class="border-white border rounded-sm"/>
+                {#each stack as technology, i}
+                    {#if (i + 1) <= (currentPage * PAGE_SIZE)}
+                        <div class="flex flex-row items-center my-4">
+                            <div class="border-1 border-white p-2 flex flex-row align-middle basis-1/4">
+                                <div class="me-5 flex justify-center items-center content-center h-full">
+                                    <img src={technology.logo} alt={technology.title}
+                                         class="border-white border rounded-sm"/>
+                                </div>
+                            </div>
+                            <div class="flex-col flex basis-3/4 content-center">
+                                <div class="flex flex-row items-center mb-2">
+                                    <span class="badge rounded-md text-xs px-2 py-1 w-fit me-2 text-white {badgeColors[technology.type]}">{technology.type_display}</span>
+                                    {#each Array(technology.experience).fill() as _, idx}
+                                        <Icon src="{Star}" class="text-yellow-200 w-4"/>
+                                    {/each}
+                                </div>
+                                <p class="font-sans text-lg font-light text-white">{technology.title}</p>
+                                <p class="font-sans text-xs font-light text-white">{technology.description}</p>
                             </div>
                         </div>
-                        <div class="flex-col flex basis-3/4 content-center">
-                            <div class="flex flex-row items-center mb-2">
-                                <span class="badge rounded-md text-xs px-2 py-1 w-fit me-2 text-white {badgeColors[technology.type]}">{technology.type_display}</span>
-                                {#each Array(technology.experience).fill() as _, i}
-                                    <Icon src="{Star}" class="text-yellow-200 w-4"/>
-                                {/each}
-                            </div>
-                            <p class="font-sans text-lg font-light text-white">{technology.title}</p>
-                            <p class="font-sans text-xs font-light text-white">{technology.description}</p>
-                        </div>
-                    </div>
+                    {/if}
                 {/each}
+                <div class="flex">
+                    {#if currentPage > 1}
+                        <Icon src="{ArrowLeft}" class="text-yellow-200 w-6"></Icon>
+                    {/if}
+                    {#if currentPage < totalPages}
+                        <Icon src="{ArrowRight}" class="text-yellow-200 w-6"
+                              on:click={() => currentPage = currentPage + 1}></Icon>
+                    {/if}
+                </div>
             {/if}
         {/if}
     </div>

@@ -2,7 +2,7 @@
     import {fly} from "svelte/transition";
 
     export let size = '';
-    export let animationConfig = {y: 200, duration: 2000};
+    export let animationConfig = {x: 200, duration: 2000};
 
     let hoverClass = [false, false, false, false, false, false];
     export let displayHome = false;
