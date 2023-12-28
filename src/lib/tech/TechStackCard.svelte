@@ -64,7 +64,7 @@
         class="bg-zinc-900 rounded-lg p-8 {size} flex mt-5"
         in:fly={animationConfig}
 >
-    <div class="flex flex-col">
+    <div class="flex flex-col w-full">
         <div class="flex flex-row items-center justify-between w-full mb-2">
             <h1 class="font-sans text-2xl font-light text-white ">Tech Stack</h1>
             <button
@@ -108,7 +108,7 @@
                             <div class="border-1 border-white p-2 flex flex-row align-middle basis-1/4">
                                 <div class="me-5 flex justify-center items-center content-center h-full">
                                     <img src={technology.logo} alt={technology.title}
-                                         class="border-white border rounded-sm"/>
+                                         class="h-1/2 w-1/2"/>
                                 </div>
                             </div>
                             <div class="flex-col flex basis-3/4 content-center">

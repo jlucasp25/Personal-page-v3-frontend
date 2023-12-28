@@ -1,19 +1,7 @@
-<script context="module">
+<script>
     import ProjectCard from "$lib/work/ProjectCard.svelte";
 
-    const project = {};
-
-    export async function load({page, fetch}) {
-        const {id} = page.params;
-        const response = await fetch(`http://localhost:8080/api/project/${id}`);
-        const data = await response.json();
-        console.log(data)
-
-        return {
-            props: {
-                user: data
-            }
-        };
-    }
+    export let data;
+    console.log(data);
 </script>
-<ProjectCard {project}/>
+<ProjectCard project={data.props.project}/>

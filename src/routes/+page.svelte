@@ -1,7 +1,6 @@
 <script>
 
     import {onMount} from 'svelte';
-    import {fade} from "svelte/transition";
     import "../app.css";
     import IntroCard from "$lib/root/IntroCard.svelte";
     import AboutMeCard from "$lib/root/AboutMeCard.svelte";

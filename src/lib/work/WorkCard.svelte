@@ -7,6 +7,7 @@
     export let animationConfig = {x: -200, duration: 2000};
     const url = 'http://localhost:8000/api/work/';
     let aggregatedProjects = [];
+    let page = 1;
 
     onMount(async () => {
         await fetchProjects();
@@ -14,9 +15,8 @@
 
     const fetchProjects = async () => {
         aggregatedProjects = [];
-        const response = await fetch(url);
-        const data = await response.json();
-        aggregatedProjects = data;
+        const response = await fetch(`${url}?page=${page}`);
+        aggregatedProjects = await response.json();
     }
 </script>
 
@@ -68,10 +68,10 @@
                 {#each company.projects as project (project.id)}
                     <!-- Start of project -->
                     <div class="ms-5 flex flex-row my-2">
-                        <div class="flex flex-row p-2">
-                            <div class="flex flex-col">
-                                <img src={project.logo} alt={project.name}
-                                     class="rounded-sm p-2"/>
+                        <div class="flex flex-row align-middle p-2">
+                            <div class="w-1/3 px-2 flex flex-row items-center justify-center">
+                                <img src={"http://localhost:8000" + project.logo} alt={project.name}
+                                     class="w-full h-fit"/>
                             </div>
                             <div class="flex flex-col w-full ms-2">
                                 <h1 class="text-lg font-light font-sans text-white">{project.name}</h1>
@@ -79,7 +79,7 @@
                                     {project.description}
                                 </p>
                             </div>
-                            <div class="flex flex-row items-center">
+                            <div class="flex flex-row items-center ms-2">
                                 <a href="/project/{project.id}" class="hover">
                                     <Icon class="text-white w-8" src="{InformationCircle}"
                                     ></Icon>
@@ -89,6 +89,8 @@
                     </div>
                     <!-- End of project -->
                 {/each}
+                <button class="text-white" on:click={() => { page -= 1; fetchProjects();}}>Prev PAGE</button>
+                <button class="text-white" on:click={() => { page += 1; fetchProjects();}}>Next PAGE</button>
             {/each}
         {/if}
     </div>
