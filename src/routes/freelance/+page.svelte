@@ -9,6 +9,6 @@
 </script>
 
 {#if pageReady}
-    <WorkCard size="w-50" freelance={false}/>
+    <WorkCard size="w-50" freelance={true}/>
     <MenuCard size="w-50" displayHome={true}/>
 {/if}

@@ -50,8 +50,12 @@
                     <img class="me-4 w-1/6" src="{project.logo}" alt="{project.name}">
                     <div class="flex flex-col justify-end">
                         <h1 class="font-sans text-2xl font-light text-white ">{project.name}</h1>
-                        <a class="text-amber-500 text-end text-2xl hover:font-bold mb-2" target="_blank"
+                        <a class="text-amber-500 text-end text-2xl hover:font-bold my-2" target="_blank"
                            href="{project.link}">Link</a>
+                        {#if project.demo_address}
+                            <a class="text-amber-500 text-end text-2xl hover:font-bold "
+                               href="{project.demo_address}">Demo</a>
+                        {/if}
                     </div>
 
                 </div>
@@ -67,7 +71,7 @@
         <div class="flex flex-row justify-between w-full">
             <!-- Tech Stack -->
             <div
-                    class="bg-zinc-900 rounded-lg p-8 {size} flex flex-col align-middle justify-between mt-5"
+                    class="bg-zinc-900 rounded-lg p-8 w-1/5 flex flex-col align-middle justify-between mt-5"
                     in:fly={animationConfig}
             >
                 <h1 class="font-sans text-2xl font-light text-white mb-3 mx-0">Tech stack</h1>
@@ -81,36 +85,33 @@
                     {/each}
                 </div>
             </div>
-            <!-- Dates -->
-            <div
-                    class="bg-zinc-900 rounded-lg p-8 {size} flex flex-col align-middle justify-between mt-5"
-                    in:fly={animationConfig}
-            >
-                <h1 class="font-sans text-2xl font-light text-white mb-0 mx-0">Dates</h1>
-                <p class="font-sans text-md font-light text-white">
-                    {project.date_from} - {project.date_to}
+            <div class="bg-zinc-900 rounded-lg p-8 w-3/5 flex flex-col align-middle justify-between mt-5 ms-2">
+                <h1 class="font-sans text-2xl font-light text-white mb-5 mx-0">Overview</h1>
+                <p class="font-sans text-sm font-light text-white mb-0 mx-0">
+                    {project.description}
                 </p>
             </div>
+            {#if project.customer}
+                <div class="bg-zinc-900 rounded-lg p-8 w-1/5 flex flex-col align-middle justify-between mt-5 ms-2">
+                    <h1 class="font-sans text-2xl font-light text-white mb-5 mx-0">Customer</h1>
+                    <p class="font-sans text-sm font-light text-white mb-0 mx-0">
+                        <img class="w-1/2" src={project.customer.logo} alt={project.customer.name}>
+                    </p>
+                </div>
+            {/if}
         </div>
 
         <!-- ScreenWebsite -->
         <div class="flex flex-row justify-between">
+            <div class="bg-zinc-900 rounded-lg p-8 w-fit h-fit flex-row align-middle justify-between mt-5">
+                <LinkButton href="/work/" title="Go Back" icon=""/>
+            </div>
             <div class="w-50 me-1">
                 <div class="bg-zinc-900 rounded-lg p-8 {size} flex flex-row align-middle justify-between mt-5">
                     <img class="zoom cursor-zoom-in" src="{project.screenshot}" alt="{project.name}">
                 </div>
             </div>
-            <div class="w-50 ms-1">
-                <div class="bg-zinc-900 rounded-lg p-8 {size} flex flex-col align-middle justify-between mt-5">
+        </div>
 
-                    <p class="font-sans text-sm font-light text-white mb-0 mx-0">
-                        {project.description}
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="bg-zinc-900 rounded-lg p-8 w-fit flex-row align-middle justify-between mt-5">
-            <LinkButton href="/work/" title="Go Back" icon=""/>
-        </div>
     </div>
 {/if}

@@ -8,7 +8,8 @@
     const url = 'http://localhost:8000/api/tech-stack/';
     let stack = [];
     let switchHover = false;
-    let isGrid = false;
+    let isGrid = true;
+    let currentStack = true;
     const PAGE_SIZE = 4;
     let currentPage = 1;
     let totalPages = 0;
@@ -27,8 +28,9 @@
     })
 
     const fetchStack = async () => {
+        currentStack = true;
         stack = [];
-        isGrid = false;
+        isGrid = true;
         const response = await fetch(url);
         const data = await response.json();
         stack = data;
@@ -36,6 +38,7 @@
     }
 
     const fetchOtherTechnologies = async () => {
+        currentStack = false;
         stack = []
         isGrid = true;
         const response = await fetch(`${url}?inactive=`);
@@ -71,9 +74,9 @@
                     class="text-white border rounded-md p-2 ms-2 flex flex-col align-middle justify-center {switchHover ? 'hover' : ''}"
                     on:mouseenter={() => switchHover = true}
                     on:mouseleave={() => switchHover = false}
-                    on:click={() => isGrid ? fetchStack() : fetchOtherTechnologies()}
+                    on:click={() => currentStack ? fetchOtherTechnologies(): fetchStack()}
             >
-                {isGrid ? 'Current Stack' : 'Other Technologies'}
+                {currentStack ? 'Other Technologies' : 'Current Stack'}
 
             </button>
         </div>
@@ -84,16 +87,19 @@
                 {#if stack.length > 0}
                     {#each stack as technology, i}
                         {#if (i + 1) <= (currentPage * PAGE_SIZE) && (i + 1) > ((currentPage - 1) * PAGE_SIZE)}
-                            <div class="flex flex-col items-center border border-white rounded-sm p-3 my-4">
-                                <div class="p-2 flex flex-row align-middle basis-1/4 mb-2">
-                                    <div class="flex justify-center items-center content-center">
-                                        <img src={technology.logo} alt={technology.title} class="h-20"/>
+                            <div class="flex flex-col border border-white rounded-md p-5 my-4">
+                                <div class="flex flex-row justify-between">
+                                    <div class="left">
+                                        <span class="badge rounded-md text-xs px-2 py-1 w-fit mb-2 text-white {badgeColors[technology.type]}">{technology.type_display}</span>
+                                    </div>
+                                    <div class="flex flex-row">
+                                        {#each Array(technology.experience).fill() as _, idx}
+                                            <Icon src="{Star}" class="text-yellow-200 w-4"/>
+                                        {/each}
                                     </div>
                                 </div>
-                                <div class="flex-col flex basis-3/4 content-end">
-                                    <span class="badge rounded-md text-xs px-2 py-1 w-fit mb-2 text-white {badgeColors[technology.type]}">{technology.type_display}</span>
-                                    <p class="font-sans text-lg font-light text-white">{technology.title}</p>
-                                    <p class="font-sans text-xs font-light text-white">{technology.description}</p>
+                                <div class="flex justify-center items-center content-center my-4">
+                                    <img src={technology.logo} alt={technology.title} class="w-1/2"/>
                                 </div>
                             </div>
                         {/if}

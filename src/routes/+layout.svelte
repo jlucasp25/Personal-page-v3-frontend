@@ -37,11 +37,13 @@
          flex-direction: column;
          justify-content: center;
          align-items: center;
+         z-index: 0;
+         /*padding: 1.5rem;*/
      }
 </style>
 
 <div id="sv-background">
 </div>
-<main class="p-6">
+<main>
     <slot/>
 </main>

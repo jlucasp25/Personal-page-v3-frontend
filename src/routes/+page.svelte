@@ -11,7 +11,7 @@
     onMount(() => pageReady = true);
 
     const aboutMeText = "Based in Porto, Portugal. Currently working full-time as a Full-Stack Software Developer at Evolutio.";
-    const aboutMeText2 = "I also develop integrated software for small and medium companies and provide formations on my current tech stack.";
+    const aboutMeText2 = "I also develop integrated software for small and medium companies, provide formations on my current tech stack and have given some lectures about my latest developments.";
 </script>
 
 
