@@ -68,41 +68,45 @@
                 {#each company.projects.data as project (project.id)}
                     <!-- Start of project -->
                     <div class="ms-5 flex flex-row my-2">
-                        <div class="flex flex-row align-middle p-2">
-                            <div class="w-1/3 px-2 flex flex-row items-center justify-center">
+                        <div class="flex flex-row align-middle p-2 w-full">
+                            <div class="w-1/4 px-2 flex flex-row items-center justify-center">
                                 <img src={`http://localhost:8000${project.logo}`} alt={project.name}
                                      class="w-full h-fit {project.put_white_background ? 'bg-white rounded-md p-2' : ''}"/>
                             </div>
-                            <div class="flex flex-col w-full ms-2">
-                                <h1 class="text-lg font-light font-sans text-white">{project.name}</h1>
-                                <p class="text-sm font-light font-sans text-white">
-                                    {project.description}
-                                </p>
-                                {#if project.demo_address}
-                                    <a class="text-amber-500 mt-3 text-start text-sm hover:font-bold "
-                                       href="{project.demo_address}">Demo</a>
-                                {/if}
-                            </div>
-                            <div class="flex flex-row items-center ms-2">
-                                <a href="/project/{project.id}" class="hover">
-                                    <Icon class="text-white w-8" src="{InformationCircle}"
-                                    ></Icon>
-                                </a>
+                            <div class="w-3/4 ms-2 flex flex-row justify-between">
+                                <div class="flex flex-col">
+                                    <h1 class="text-lg font-light font-sans text-white">{project.name}</h1>
+                                    <p class="text-sm font-light font-sans text-white">
+                                        {project.description}
+                                    </p>
+                                    {#if project.demo_address}
+                                        <a class="text-amber-500 mt-3 text-start text-sm hover:font-bold "
+                                           href="{project.demo_address}">Demo</a>
+                                    {/if}
+                                </div>
+                                <div class="flex flex-row items-center ms-2">
+                                    <a href="/project/{project.id}" class="hover">
+                                        <Icon class="text-white w-8" src="{InformationCircle}"
+                                        ></Icon>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- End of project -->
                 {/each}
-                {#if company.projects.paginator.has_previous}
-                    <button on:click={() => {page-=1; fetchProjects()}}>
-                        <Icon class="text-white w-8" src="{ArrowLeft}"></Icon>
-                    </button>
-                {/if}
-                {#if company.projects.paginator.has_next}
-                    <button on:click={() => {page+=1; fetchProjects()}}>
-                        <Icon class="text-white w-8" src="{ArrowRight}"></Icon>
-                    </button>
-                {/if}
+                <div class="flex flex-row justify-end">
+                    {#if company.projects.paginator.has_previous}
+                        <button on:click={() => {page-=1; fetchProjects()}}>
+                            <Icon class="text-white w-8" src="{ArrowLeft}"></Icon>
+                        </button>
+                    {/if}
+                    {#if company.projects.paginator.has_next}
+                        <button on:click={() => {page+=1; fetchProjects()}}>
+                            <Icon class="text-white w-8" src="{ArrowRight}"></Icon>
+                        </button>
+                    {/if}
+                </div>
             {/each}
         {/if}
     </div>

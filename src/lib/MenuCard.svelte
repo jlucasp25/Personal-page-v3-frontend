@@ -109,7 +109,7 @@
         <a class="text-white border rounded-md p-4 mx-1 flex flex-col align-middle justify-center {hoverClass[5] ? 'hover' : ''}"
            on:mouseenter={() => hoverClass[5] = true}
            on:mouseleave={() => hoverClass[5] = false}
-           href="/about">
+           href="/lectures">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                  stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -120,10 +120,10 @@
             </span>
         </a>
 
-        <a class="text-white border rounded-md p-4 mx-1 flex flex-col align-middle justify-center {hoverClass[5] ? 'hover' : ''}"
+        <a class="text-white border rounded-md p-4 mx-1 flex flex-col align-middle justify-center {hoverClass[6] ? 'hover' : ''}"
            on:mouseenter={() => hoverClass[6] = true}
            on:mouseleave={() => hoverClass[6] = false}
-           href="/about">
+           href="/hobbies">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                  stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
