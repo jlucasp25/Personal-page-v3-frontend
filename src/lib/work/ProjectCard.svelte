@@ -1,12 +1,21 @@
 <script>
     import {fly} from "svelte/transition";
     import LinkButton from "$lib/LinkButton.svelte";
+    import {onMount} from "svelte";
 
     export let size = '';
-    export let animationConfig = {x: -200, duration: 2000};
+    let titleAnimationConfig = {x: -200, duration: 2000};
+    let techStackAnimationConfig = {x: -200, duration: 3000};
+    let overviewAnimationConfig = {x: 200, duration: 2000};
+    let backAnimationConfig = {y: 200, duration: 2000};
+    let screenshotAnimationConfig = {y: 200, duration: 2000};
 
     export let project = null;
-    console.log(project);
+    let pageReady = false;
+
+    onMount(() => {
+        pageReady = true;
+    })
 
 </script>
 
@@ -38,11 +47,11 @@
         transform: scale(1.5);
     }
 </style>
-{#if project}
+{#if pageReady}
     <div class="w-75">
         <div
                 class="bg-zinc-900 rounded-lg p-8 {size} flex mt-5"
-                in:fly={animationConfig}
+                in:fly={titleAnimationConfig}
         >
 
             <div class="flex flex-col w-full">
@@ -72,7 +81,7 @@
             <!-- Tech Stack -->
             <div
                     class="bg-zinc-900 rounded-lg p-8 w-1/5 flex flex-col align-middle justify-between mt-5"
-                    in:fly={animationConfig}
+                    in:fly={techStackAnimationConfig}
             >
                 <h1 class="font-sans text-2xl font-light text-white mb-3 mx-0">Tech stack</h1>
                 <div class="flex flex-row">
@@ -85,7 +94,9 @@
                     {/each}
                 </div>
             </div>
-            <div class="bg-zinc-900 rounded-lg p-8 w-3/5 flex flex-col align-middle justify-between mt-5 ms-2">
+            <div class="bg-zinc-900 rounded-lg p-8 w-3/5 flex flex-col align-middle justify-between mt-5 ms-2"
+                 in:fly={overviewAnimationConfig}
+            >
                 <h1 class="font-sans text-2xl font-light text-white mb-5 mx-0">Overview</h1>
                 <p class="font-sans text-sm font-light text-white mb-0 mx-0">
                     {project.description}
@@ -103,11 +114,15 @@
 
         <!-- ScreenWebsite -->
         <div class="flex flex-row justify-between">
-            <div class="bg-zinc-900 rounded-lg p-8 w-fit h-fit flex-row align-middle justify-between mt-5">
+            <div class="bg-zinc-900 rounded-lg p-8 w-fit h-fit flex-row align-middle justify-between mt-5"
+                 in:fly={backAnimationConfig}
+            >
                 <LinkButton href="/work/" title="Go Back" icon=""/>
             </div>
             <div class="w-50 me-1">
-                <div class="bg-zinc-900 rounded-lg p-8 {size} flex flex-row align-middle justify-between mt-5">
+                <div class="bg-zinc-900 rounded-lg p-8 {size} flex flex-row align-middle justify-between mt-5"
+                     in:fly={screenshotAnimationConfig}
+                >
                     <img class="zoom cursor-zoom-in" src="{project.screenshot}" alt="{project.name}">
                 </div>
             </div>
