@@ -8,6 +8,7 @@
     let techStackAnimationConfig = {x: -200, duration: 3000};
     let overviewAnimationConfig = {x: 200, duration: 2000};
     let backAnimationConfig = {y: 200, duration: 2000};
+    let customerAnimationConfig = {x: -200, duration: 3000};
     let screenshotAnimationConfig = {y: 200, duration: 2000};
 
     export let project = null;
@@ -102,14 +103,6 @@
                     {project.description}
                 </p>
             </div>
-            {#if project.customer}
-                <div class="bg-zinc-900 rounded-lg p-8 w-1/5 flex flex-col align-middle justify-between mt-5 ms-2">
-                    <h1 class="font-sans text-2xl font-light text-white mb-5 mx-0">Customer</h1>
-                    <p class="font-sans text-sm font-light text-white mb-0 mx-0">
-                        <img class="w-1/2" src={project.customer.logo} alt={project.customer.name}>
-                    </p>
-                </div>
-            {/if}
         </div>
 
         <!-- ScreenWebsite -->
@@ -119,11 +112,21 @@
             >
                 <LinkButton href="/work/" title="Go Back" icon=""/>
             </div>
-            <div class="w-50 me-1">
-                <div class="bg-zinc-900 rounded-lg p-8 {size} flex flex-row align-middle justify-between mt-5"
-                     in:fly={screenshotAnimationConfig}
-                >
-                    <img class="zoom cursor-zoom-in" src="{project.screenshot}" alt="{project.name}">
+            <div class="right flex justify-end items-start">
+                {#if project.customer}
+                    <div class="bg-zinc-900 rounded-lg p-8 h-fit w-1/5 mx-2 flex flex-col align-middle justify-between mt-5 ms-2">
+                        <h1 class="font-sans text-2xl font-light text-white mb-5 mx-0">Customer</h1>
+                        <p class="font-sans text-sm font-light text-white mb-0 mx-0">
+                            <img class="w-1/2" src={project.customer.logo} alt={project.customer.name}>
+                        </p>
+                    </div>
+                {/if}
+                <div class="w-50 me-1">
+                    <div class="bg-zinc-900 rounded-lg p-8 {size} flex flex-row align-middle justify-between mt-5"
+                         in:fly={screenshotAnimationConfig}
+                    >
+                        <img class="zoom cursor-zoom-in" src="{project.screenshot}" alt="{project.name}">
+                    </div>
                 </div>
             </div>
         </div>

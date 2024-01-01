@@ -27,7 +27,7 @@
     }
 </style>
 
-<a class="text-white border rounded-md p-4 flex flex-col align-middle justify-center {hoverClass ? 'hover' : ''}"
+<a class="text-white border rounded-md p-4 flex flex-col align-middle justify-center w-fit {hoverClass ? 'hover' : ''}"
    on:mouseenter={() => hoverClass = true}
    on:mouseleave={() => hoverClass = false}
    href="{href}">

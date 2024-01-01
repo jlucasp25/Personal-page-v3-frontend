@@ -3,7 +3,6 @@
 
     export let body;
     export let body2;
-    export let size = '';
     export let animationConfig = {x: -200, duration: 2000};
 </script>
 
@@ -14,14 +13,10 @@
         padding: 2rem;
         border-radius: 4px;
     }
-
-    .w-50 {
-        width: 50%;
-    }
 </style>
 
 <div
-        class="bg-zinc-900 rounded-lg p-8 {size} flex mt-5"
+        class="bg-zinc-900 rounded-lg p-8 flex mt-5 mx-5 w-full sm:w-1/2"
         in:fly={animationConfig}
 >
     <div class="flex flex-col ">

@@ -21,7 +21,7 @@
 </style>
 
 <div
-        class="bg-zinc-900 rounded-lg p-8 mt-5 {size} flex"
+        class="bg-zinc-900 rounded-lg p-8 mt-5 mx-5 w-full sm:w-1/2 flex"
         in:fly={animationConfig}
 >
     <div class="flex flex-col w-full justify-between text-white font-light">
@@ -29,9 +29,9 @@
         <p>Background interface built using Vanta.js</p>
         <p class="font-bold mt-2">&copy; {new Date().getFullYear()} João Lucas Pires </p>
         <div class="flex flex-row items-center mt-2 pt-2">
-        <img src="/SVELTE.png" alt="SvelteKit" class="w-8">
-        <img src="/django.svg" alt="Django" class="ms-2 w-8">
-        <img src="/TW.svg" alt="Tailwind" class="ms-2 w-8">
+            <img src="/SVELTE.png" alt="SvelteKit" class="w-8">
+            <img src="/django.svg" alt="Django" class="ms-2 w-8">
+            <img src="/TW.svg" alt="Tailwind" class="ms-2 w-8">
         </div>
     </div>
 </div>

@@ -69,7 +69,7 @@
 >
     <div class="flex flex-col w-full">
         <div class="flex flex-row items-center justify-between w-full mb-2">
-            <h1 class="font-sans text-2xl font-light text-white ">Tech Stack</h1>
+            <h1 class="font-sans text-2xl font-light text-white ">{currentStack ? 'Main Tech Stack' : 'Past Technologies'}</h1>
             <button
                     class="text-white border rounded-md p-2 ms-2 flex flex-col align-middle justify-center {switchHover ? 'hover' : ''}"
                     on:mouseenter={() => switchHover = true}
@@ -87,18 +87,18 @@
                 {#if stack.length > 0}
                     {#each stack as technology, i}
                         {#if (i + 1) <= (currentPage * PAGE_SIZE) && (i + 1) > ((currentPage - 1) * PAGE_SIZE)}
-                            <div class="flex flex-col border border-white rounded-md p-5 my-4">
-                                <div class="flex flex-row justify-between">
+                            <div class="flex flex-col justify-center items-center rounded-md p-5 my-4">
+                                <div class="flex flex-row w-full justify-between">
                                     <div class="left">
                                         <span class="badge rounded-md text-xs px-2 py-1 w-fit mb-2 text-white {badgeColors[technology.type]}">{technology.type_display}</span>
                                     </div>
-                                    <div class="flex flex-row">
+                                    <div class="flex flex-row" title="Experience Level">
                                         {#each Array(technology.experience).fill() as _, idx}
                                             <Icon src="{Star}" class="text-yellow-200 w-4"/>
                                         {/each}
                                     </div>
                                 </div>
-                                <div class="flex justify-center items-center content-center my-4">
+                                <div class="flex justify-center items-center content-center mt-6">
                                     <img src={technology.logo} alt={technology.title} class="w-1/2"/>
                                 </div>
                             </div>

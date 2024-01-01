@@ -21,7 +21,7 @@
 </style>
 
 <div
-        class="bg-zinc-900 rounded-lg p-8 {size} flex"
+        class="bg-zinc-900 rounded-lg p-8 w-full sm:w-1/2 flex mx-5 mt-5"
         in:fly={animationConfig}
 >
     <div class="flex flex-col w-50">

@@ -16,20 +16,17 @@
 
 
 {#if pageReady}
-    <IntroCard
-            size="w-50"
-            title="João Lucas Pires"
-            body="Welcome to my personal website."
-    />
-
-    <AboutMeCard
-            size="w-50"
-            body="{aboutMeText}"
-            body2="{aboutMeText2}"
-    />
-    <MenuCard
-            size="w-50"
-    />
-    <CopyrightCard size="w-50"
-    />
+    <div class="flex flex-col justify-center items-center w-full">
+        <IntroCard
+                title="João Lucas Pires"
+                body="Welcome to my personal website."
+        />
+        <AboutMeCard
+                body="{aboutMeText}"
+                body2="{aboutMeText2}"
+        />
+        <MenuCard
+        />
+        <CopyrightCard/>
+    </div>
 {/if}
